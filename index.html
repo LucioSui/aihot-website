@@ -632,11 +632,17 @@
       .mobile-menu-btn { display: block; }
       .nav { max-width: 100%; }
       .hero { padding: 28px 16px 20px; }
-      .hero-inner { flex-direction: column; gap: 8px; }
+      .hero-inner {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 12px;
+      }
+      .hero-inner > div:first-child { grid-row: 1 / 3; }
       .hero-title h1 { font-size: 1.5rem; }
       .hero-sub { font-size: 0.92rem; }
       .hero-desc { font-size: 0.82rem; }
-      .hero-status { text-align: left; font-size: 0.72rem; }
+      .hero-status { text-align: right; font-size: 0.72rem; grid-row: 2; }
       .filters-inner { flex-wrap: wrap; gap: 8px; }
       .filter-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-basis: 100%; }
       .search-box { flex-basis: auto; }
