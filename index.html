@@ -143,6 +143,21 @@
       color: var(--text-primary);
       background: rgba(255,255,255,0.08);
     }
+    .nav-links .nav-report {
+      background: linear-gradient(135deg, #ff0080, #ff8c00, #ffe600, #00ff88, #00bfff, #8a2be2);
+      background-size: 300% 300%;
+      animation: rainbowSlide 4s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 600;
+    }
+    .nav-links .nav-report:hover {
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: brightness(1.2);
+    }
+    }
     .btn-login {
       font-size: 0.82rem;
       padding: 5px 16px;
@@ -713,7 +728,7 @@
         <a href="#" class="logo"><span class="ai">AIVISE</span></a>
         <div class="nav-links">
           <a href="#" class="active">精选</a>
-          <a href="report.html">报告</a>
+          <a href="report.html" class="nav-report">报告</a>
         </div>
       </div>
       <div style="display:flex;align-items:center;gap:10px;">
