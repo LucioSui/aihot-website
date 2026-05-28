@@ -200,6 +200,14 @@ function deploy(html) {
     fs.copyFileSync(cnameSrc, cnameDest);
     console.log(`  Copied CNAME -> ${cnameDest}`);
   }
+
+  // Copy report.html to docs/
+  const reportSrc = path.join(__dirname, 'report.html');
+  const reportDest = path.join(OUTPUT_DIR, 'report.html');
+  if (fs.existsSync(reportSrc)) {
+    fs.copyFileSync(reportSrc, reportDest);
+    console.log(`  Copied report.html -> ${reportDest}`);
+  }
 }
 
 // ===== Main =====
