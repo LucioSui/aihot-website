@@ -157,6 +157,31 @@
       background-clip: text;
       filter: brightness(1.2);
     }
+
+    /* Flowing-light text effect for Report link */
+    .flow-text {
+      background: linear-gradient(90deg,
+        var(--text-secondary) 0%,
+        #fff 20%,
+        #ff0080 30%,
+        #ff8c00 40%,
+        #ffe600 50%,
+        #00ff88 60%,
+        #00bfff 70%,
+        #8a2be2 80%,
+        var(--text-secondary) 100%
+      );
+      background-size: 200% 100%;
+      animation: flowShine 3s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+    @keyframes flowShine {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
     }
     .btn-login {
       font-size: 0.82rem;
@@ -764,7 +789,7 @@
         <button class="filter-tab" data-category="industry">行业</button>
         <button class="filter-tab" data-category="paper">论文</button>
         <button class="filter-tab" data-category="tip">技巧</button>
-        <a href="report.html" class="filter-tab nav-report" style="text-decoration:none;">报告</a>
+        <a href="report.html" class="filter-tab" style="text-decoration:none;"><span class="flow-text">报告</span></a>
       </div>
       <div class="search-box">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
