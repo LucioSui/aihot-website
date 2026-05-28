@@ -735,7 +735,7 @@
         <p class="hero-desc">AI 自动挑选的高价值内容</p>
       </div>
       <div class="hero-status" id="apiStatus">
-        <span class="dot loading"></span> 正在连接...
+        <span class="dot loading"></span> AI工作中
       </div>
     </div>
   </section>
@@ -1005,9 +1005,9 @@ function renderError(msg) {
 function updateStatus(ok, elapsedOrErr) {
   if (ok) {
     const label = typeof elapsedOrErr === 'number' ? elapsedOrErr + 'ms' : '';
-    apiStatus.innerHTML = '<span class="dot"></span> API 正常 (' + label + ')';
+    apiStatus.innerHTML = '<span class="dot"></span> AI工作中';
   } else {
-    apiStatus.innerHTML = '<span class="dot offline"></span> API 异常 - ' + (elapsedOrErr || '连接失败');
+    apiStatus.innerHTML = '<span class="dot offline"></span> AI工作中（异常）';
   }
 }
 
