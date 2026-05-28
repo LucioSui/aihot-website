@@ -1,0 +1,11 @@
+{
+  "name": "aihot-website",
+  "version": "1.0.0",
+  "description": "AIHOT website - GitHub Pages static deployment with API data injection",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": ["aihot", "ai-news", "github-pages"],
+  "license": "MIT"
+}

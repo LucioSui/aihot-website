@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIVISE - AI 精选</title>
+  <meta name="description" content="AI 精选动态，汇集全球顶尖来源的最新 AI 资讯。" />
+  <style>
+    /* ===== Reset & Variables ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-deep: #0a0a1a;
+      --bg-card: rgba(255,255,255,0.06);
+      --bg-card-hover: rgba(255,255,255,0.10);
+      --glass-border: rgba(255,255,255,0.12);
+      --glass-border-bright: rgba(255,255,255,0.22);
+      --text-primary: #e8eaf0;
+      --text-secondary: rgba(255,255,255,0.62);
+      --text-muted: rgba(255,255,255,0.38);
+      --accent: #818cf8;
+      --accent-glow: rgba(129,140,248,0.35);
+      --nav-height: 56px;
+      --container: 680px;
+      --radius: 14px;
+      --radius-sm: 8px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      --font-mono: "SF Mono", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+    }
+
+    html { font-size: 15px; scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      color: var(--text-primary);
+      background: var(--bg-deep);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===== Animated Rainbow Background ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(255,0,128,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 10%, rgba(120,0,255,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(0,180,255,0.10) 0%, transparent 50%),
+        radial-gradient(ellipse at 10% 70%, rgba(255,165,0,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 60%, rgba(0,255,128,0.07) 0%, transparent 50%);
+      animation: bgShift 20s ease-in-out infinite alternate;
+    }
+    @keyframes bgShift {
+      0%   { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(-5%, -3%) rotate(3deg); }
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+    button { font-family: inherit; }
+
+    /* ===== Rainbow Glass Mixin ===== */
+    .glass {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+    }
+
+    /* ===== Header ===== */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: var(--nav-height);
+      background: rgba(10,10,26,0.72);
+      backdrop-filter: blur(24px) saturate(1.6);
+      -webkit-backdrop-filter: blur(24px) saturate(1.6);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    /* Rainbow top line */
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ff0080, #ff8c00, #ffe600, #00ff88, #00bfff, #8a2be2, #ff0080);
+      background-size: 200% 100%;
+      animation: rainbowSlide 4s linear infinite;
+    }
+    @keyframes rainbowSlide {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-left { display: flex; align-items: center; gap: 28px; }
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .logo .ai {
+      background: linear-gradient(135deg, #ff0080, #ff8c00, #ffe600, #00ff88, #00bfff, #8a2be2);
+      background-size: 300% 300%;
+      animation: rainbowSlide 4s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-links { display: flex; gap: 2px; }
+    .nav-links a {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.08);
+    }
+    .btn-login {
+      font-size: 0.82rem;
+      padding: 5px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border-bright);
+      background: rgba(255,255,255,0.06);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.25s;
+      backdrop-filter: blur(8px);
+    }
+    .btn-login:hover {
+      background: rgba(255,255,255,0.12);
+      color: var(--text-primary);
+      border-color: rgba(255,255,255,0.35);
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      margin-top: var(--nav-height);
+      padding: 40px 20px 24px;
+      position: relative;
+    }
+    .hero-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .hero-title {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 6px;
+    }
+    .hero-title h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .hero-title h1 .brand {
+      background: linear-gradient(135deg, #ff0080, #ff8c00, #ffe600, #00ff88, #00bfff, #8a2be2);
+      background-size: 300% 300%;
+      animation: rainbowSlide 4s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .hero-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .hero-status {
+      text-align: right;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .hero-status .dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #00ff88;
+      margin-right: 5px;
+      vertical-align: middle;
+      box-shadow: 0 0 6px rgba(0,255,136,0.5);
+    }
+    .hero-status .dot.offline {
+      background: #ff4444;
+      box-shadow: 0 0 6px rgba(255,68,68,0.5);
+    }
+    .hero-status .dot.loading {
+      background: #ffe600;
+      box-shadow: 0 0 6px rgba(255,230,0,0.5);
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ===== Filters ===== */
+    .filters {
+      padding: 14px 20px;
+      position: sticky;
+      top: var(--nav-height);
+      z-index: 90;
+      background: rgba(10,10,26,0.6);
+      backdrop-filter: blur(16px) saturate(1.3);
+      -webkit-backdrop-filter: blur(16px) saturate(1.3);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .filters-inner {
+      max-width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .filter-tabs {
+      display: flex;
+      gap: 2px;
+      flex: 1;
+    }
+    .filter-tab {
+      font-size: 0.82rem;
+      padding: 5px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.25s;
+      border: 1px solid transparent;
+      background: transparent;
+      font-weight: 500;
+    }
+    .filter-tab:hover {
+      color: var(--text-primary);
+      background: rgba(255,255,255,0.06);
+    }
+    .filter-tab.active {
+      background: rgba(255,255,255,0.10);
+      color: var(--text-primary);
+      border-color: var(--glass-border-bright);
+      box-shadow: 0 0 16px rgba(129,140,248,0.12);
+    }
+    .search-box {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .search-box input {
+      width: 160px;
+      padding: 5px 10px 5px 30px;
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      background: rgba(255,255,255,0.05);
+      color: var(--text-primary);
+      outline: none;
+      transition: all 0.3s;
+      backdrop-filter: blur(8px);
+    }
+    .search-box input::placeholder { color: var(--text-muted); }
+    .search-box input:focus {
+      border-color: var(--accent);
+      width: 220px;
+      background: rgba(255,255,255,0.08);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+    .search-box svg {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+    }
+
+    /* ===== Feed ===== */
+    .feed {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 16px 20px 60px;
+    }
+
+    /* Date separator */
+    .date-sep {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      padding: 20px 0 10px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .date-sep::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff0080, #8a2be2);
+      box-shadow: 0 0 8px rgba(138,43,226,0.4);
+      flex-shrink: 0;
+    }
+    .date-sep::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--glass-border), transparent);
+    }
+
+    /* News card - Rainbow Glass */
+    .news-card {
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px) saturate(1.3);
+      -webkit-backdrop-filter: blur(16px) saturate(1.3);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: all 0.3s ease;
+      animation: fadeIn 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, #ff0080, #ff8c00, #ffe600, #00ff88, #00bfff, #8a2be2);
+      background-size: 100% 200%;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .news-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.16);
+      box-shadow:
+        0 4px 32px rgba(0,0,0,0.2),
+        0 0 60px rgba(129,140,248,0.06);
+      transform: translateY(-1px);
+    }
+    .news-card:hover::before { opacity: 1; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .card-time {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      min-width: 36px;
+      padding-top: 2px;
+    }
+    .card-source {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 0;
+    }
+    .card-source-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.55;
+      margin-bottom: 6px;
+      color: var(--text-primary);
+    }
+    .card-title a { transition: color 0.2s; }
+    .card-title a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .card-body {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .card-tag {
+      font-size: 0.72rem;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-secondary);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .card-tag:hover {
+      background: rgba(255,255,255,0.12);
+      color: var(--text-primary);
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+    .card-meta a {
+      color: var(--accent);
+      transition: opacity 0.2s;
+    }
+    .card-meta a:hover { opacity: 0.7; }
+
+    /* ===== Skeleton ===== */
+    .skeleton-card {
+      padding: 18px 20px;
+      margin-bottom: 10px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .skeleton-line {
+      height: 14px;
+      background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .skeleton-line.w60 { width: 60%; }
+    .skeleton-line.w80 { width: 80%; }
+    .skeleton-line.w40 { width: 40%; }
+    .skeleton-line.h20 { height: 20px; }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ===== Error / Empty ===== */
+    .feed-message {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--text-muted);
+    }
+    .feed-message svg {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      color: rgba(255,255,255,0.1);
+    }
+    .feed-message h3 {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .feed-message p { font-size: 0.85rem; }
+    .btn-retry {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 8px 24px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border-bright);
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s;
+    }
+    .btn-retry:hover {
+      background: rgba(255,255,255,0.14);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    /* ===== Pagination ===== */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      padding: 24px 0 40px;
+    }
+    .page-btn {
+      padding: 6px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.25s;
+      backdrop-filter: blur(8px);
+    }
+    .page-btn:hover:not(:disabled) {
+      background: rgba(255,255,255,0.10);
+      border-color: var(--glass-border-bright);
+      color: var(--text-primary);
+    }
+    .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .page-btn.active {
+      background: rgba(129,140,248,0.20);
+      color: var(--accent);
+      border-color: rgba(129,140,248,0.4);
+    }
+    .page-info { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ===== Refresh FAB ===== */
+    .refresh-bar {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+    }
+    .refresh-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border-bright);
+      background: rgba(20,20,40,0.7);
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      color: var(--text-secondary);
+    }
+    .refresh-btn:hover {
+      border-color: rgba(255,255,255,0.35);
+      color: var(--text-primary);
+      box-shadow: 0 4px 32px rgba(129,140,248,0.2);
+      transform: scale(1.05);
+    }
+    .refresh-btn.spinning svg { animation: spin 0.8s linear; }
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .refresh-btn svg { width: 18px; height: 18px; }
+
+    /* ===== Footer ===== */
+    .footer {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--glass-border);
+    }
+    .footer a { color: var(--accent); }
+    .footer .brand-name {
+      background: linear-gradient(135deg, #ff0080, #ff8c00, #ffe600, #00ff88, #00bfff, #8a2be2);
+      background-size: 300% 300%;
+      animation: rainbowSlide 4s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+
+    /* ===== Mobile ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-title h1 { font-size: 1.5rem; }
+      .search-box input { width: 120px; }
+      .search-box input:focus { width: 160px; }
+      .filter-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .feed { padding: 12px 16px 40px; }
+      .hero-inner { flex-direction: column; gap: 8px; }
+      .hero-status { text-align: left; }
+      .news-card { padding: 14px 16px; }
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+    @media (max-width: 768px) { .mobile-menu-btn { display: block; } }
+    .mobile-menu-btn span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--text-secondary);
+      margin: 4px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <div class="nav-left">
+        <a href="#" class="logo"><span class="ai">AIVISE</span></a>
+        <div class="nav-links">
+          <a href="#" class="active">精选</a>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="mobile-menu-btn" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-title">
+          <h1><span class="brand">AIVISE</span></h1>
+          <span class="hero-sub">精选</span>
+        </div>
+        <p class="hero-desc">AI 自动挑选的高价值内容，源自 AIHOT</p>
+      </div>
+      <div class="hero-status" id="apiStatus">
+        <span class="dot loading"></span> 正在连接...
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <section class="filters">
+    <div class="filters-inner">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-category="">全部</button>
+        <button class="filter-tab" data-category="ai-models">模型</button>
+        <button class="filter-tab" data-category="ai-products">产品</button>
+        <button class="filter-tab" data-category="industry">行业</button>
+        <button class="filter-tab" data-category="paper">论文</button>
+        <button class="filter-tab" data-category="tip">技巧</button>
+      </div>
+      <div class="search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="searchInput" placeholder="搜索" />
+      </div>
+    </div>
+  </section>
+
+  <!-- News Feed -->
+  <main class="feed" id="feed">
+    <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w60"></div></div>
+    <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w60"></div></div>
+    <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w40"></div></div>
+    <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w60"></div></div>
+    <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w40"></div></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p><span class="brand-name">AIVISE</span> &middot; 数据来源 <a href="https://aihot.virxact.com" target="_blank">AIHOT</a> &middot; 实时 API 驱动</p>
+  </footer>
+
+  <!-- Refresh FAB -->
+  <div class="refresh-bar">
+    <button class="refresh-btn" id="refreshBtn" title="刷新数据">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4 4v5h5M20 20v-5h-5"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L4 7m16 10a9 9 0 0 0-14.85 3.36L4 17"/></svg>
+    </button>
+  </div>
+
+<script>
+// ===== Embedded Data (injected by GitHub Actions build) =====
+// BUILD_DATA placeholder is replaced by the build script with actual API data
+// If running directly (no build), falls back to live API via CORS-free mode
+const __EMBEDDED_DATA__ = typeof BUILD_DATA !== 'undefined' ? BUILD_DATA : null;
+
+// ===== Configuration =====
+const ITEMS_PER_PAGE = 30;
+const DAYS_BACK = 3;
+const REFRESH_INTERVAL = 30 * 60 * 1000;
+
+const CATEGORY_LABELS = {
+  'ai-models': '模型',
+  'ai-products': '产品',
+  'industry': '行业',
+  'paper': '论文',
+  'tip': '技巧',
+};
+
+// ===== State =====
+let state = {
+  items: [],
+  category: '',
+  searchQuery: '',
+  page: 1,
+  hasNext: false,
+  nextCursor: null,
+  loading: false,
+  error: null,
+  lastFetched: null,
+  useEmbedded: !!__EMBEDDED_DATA__,
+  buildTime: __EMBEDDED_DATA__ ? __EMBEDDED_DATA__.buildTime : null,
+};
+
+// ===== DOM =====
+const feed = document.getElementById('feed');
+const searchInput = document.getElementById('searchInput');
+const refreshBtn = document.getElementById('refreshBtn');
+const apiStatus = document.getElementById('apiStatus');
+
+// ===== Data Loading =====
+// Two modes:
+// 1. Embedded mode (GitHub Pages): data is inlined as BUILD_DATA JSON at build time
+// 2. Live API mode (dev/server): fetch from AIHOT API via proxy
+function filterAndPaginate(allItems, category, searchQuery, page) {
+  let filtered = allItems;
+  // Filter by category
+  if (category) {
+    filtered = filtered.filter(item => item.category === category);
+  }
+  // Filter by search query
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(item =>
+      (item.title && item.title.toLowerCase().includes(q)) ||
+      (item.summary && item.summary.toLowerCase().includes(q)) ||
+      (item.source && item.source.toLowerCase().includes(q))
+    );
+  }
+  // Paginate
+  const start = (page - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+  const pageItems = filtered.slice(start, end);
+  const hasNext = end < filtered.length;
+  return { items: pageItems, hasNext, totalCount: filtered.length };
+}
+
+async function fetchItems() {
+  // Embedded data mode (GitHub Pages static build)
+  if (__EMBEDDED_DATA__ && __EMBEDDED_DATA__.items) {
+    const result = filterAndPaginate(
+      __EMBEDDED_DATA__.items,
+      state.category,
+      state.searchQuery,
+      state.page
+    );
+    return {
+      count: result.totalCount,
+      hasNext: result.hasNext,
+      nextCursor: null,
+      items: result.items
+    };
+  }
+
+  // Live API mode (for dev or server deployment)
+  // Note: This requires a CORS proxy or same-origin setup
+  throw new Error('API 代理未配置。GitHub Pages 部署请使用 GitHub Actions 定时构建。');
+}
+
+async function loadData() {
+  if (state.loading) return;
+  state.loading = true;
+  state.error = null;
+
+  // Embedded mode: no skeleton, instant render
+  if (!state.useEmbedded && state.page === 1) {
+    feed.innerHTML = `
+      <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w60"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w60"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w40"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w60"></div></div>
+      <div class="skeleton-card"><div class="skeleton-line h20 w80"></div><div class="skeleton-line"></div><div class="skeleton-line w40"></div></div>
+    `;
+  }
+
+  refreshBtn.classList.add('spinning');
+
+  const t0 = performance.now();
+
+  try {
+    const data = await fetchItems();
+    const elapsed = Math.round(performance.now() - t0);
+
+    state.hasNext = data.hasNext || false;
+    state.nextCursor = data.nextCursor || null;
+    state.lastFetched = new Date();
+
+    if (state.page === 1) {
+      state.items = data.items || [];
+    } else {
+      state.items = [...state.items, ...(data.items || [])];
+    }
+
+    if (state.useEmbedded) {
+      // Show build time status for static mode
+      const buildDate = new Date(state.buildTime);
+      const ago = Math.floor((Date.now() - buildDate) / 60000);
+      const label = ago < 2 ? '刚刚更新' : `${ago}分钟前更新`;
+      updateStatus(true, `静态构建 ${label}`);
+    } else {
+      updateStatus(true, elapsed);
+    }
+    renderItems();
+  } catch (err) {
+    state.error = err.message;
+    state.hasNext = false;
+    updateStatus(false, err.message || '连接失败');
+    if (state.page === 1) {
+      renderError(err.message);
+    }
+  } finally {
+    state.loading = false;
+    refreshBtn.classList.remove('spinning');
+  }
+}
+
+// ===== Render =====
+function timeAgo(dateStr) {
+  const now = new Date();
+  const date = new Date(dateStr);
+  const diff = Math.floor((now - date) / 1000);
+  if (diff < 60) return '刚刚';
+  if (diff < 3600) return `${Math.floor(diff / 60)}m`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}h`;
+  return `${Math.floor(diff / 86400)}d`;
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr);
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  const weekday = ['日', '一', '二', '三', '四', '五', '六'][d.getDay()];
+  return `${month}-${day} 周${weekday}`;
+}
+
+function renderItems() {
+  if (state.items.length === 0 && !state.error) {
+    feed.innerHTML = `
+      <div class="feed-message">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        <h3>暂无内容</h3>
+        <p>当前分类下没有找到内容</p>
+      </div>`;
+    return;
+  }
+
+  const grouped = {};
+  state.items.forEach(item => {
+    // publishedAt may be null per spec; fall back to item id grouping
+    const dateKey = item.publishedAt
+      ? new Date(item.publishedAt).toISOString().slice(0, 10)
+      : '__no-date__';
+    if (!grouped[dateKey]) grouped[dateKey] = [];
+    grouped[dateKey].push(item);
+  });
+
+  let html = '';
+  const dateKeys = Object.keys(grouped).sort().reverse();
+
+  for (const dateKey of dateKeys) {
+    const items = grouped[dateKey];
+    if (items.length === 0) continue;
+
+    html += `<div class="date-sep">${formatDate(items[0].publishedAt)}</div>`;
+
+    items.forEach(item => {
+      const time = new Date(item.publishedAt);
+      const hour = String(time.getHours()).padStart(2, '0');
+      const minute = String(time.getMinutes()).padStart(2, '0');
+      const timeStr = `${hour}:${minute}`;
+
+      const sourceName = item.source || '未知来源';
+      const title = item.title || '无标题';
+      const summary = item.summary || '';
+      const link = item.url || '#';
+
+      let tagsHtml = '';
+      if (item.category) {
+        const label = CATEGORY_LABELS[item.category] || item.category;
+        tagsHtml = `<div class="card-tags"><span class="card-tag">${label}</span></div>`;
+      }
+
+      html += `
+      <article class="news-card" style="animation-delay: 0.05s">
+        <div class="card-top">
+          <span class="card-time">${timeStr}</span>
+          <span class="card-source">
+            <span class="card-source-name">${sourceName}</span>
+          </span>
+        </div>
+        <div class="card-title">
+          <a href="${link}" target="_blank" rel="noopener">${title}</a>
+        </div>
+        ${summary ? `<div class="card-body">${summary}</div>` : ''}
+        ${tagsHtml}
+        <div class="card-meta">
+          <span>${timeAgo(item.publishedAt)}</span>
+          <a href="${link}" target="_blank" rel="noopener">查看详情</a>
+        </div>
+      </article>`;
+    });
+  }
+
+  if (state.hasNext) {
+    html += `
+    <div class="pagination">
+      <button class="page-btn" id="loadMoreBtn" onclick="loadMore()">加载更多</button>
+      <span class="page-info">第 ${state.page} 页</span>
+    </div>`;
+  }
+
+  feed.innerHTML = html;
+}
+
+function renderError(msg) {
+  feed.innerHTML = `
+    <div class="feed-message">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+      <h3>加载失败</h3>
+      <p>${msg}</p>
+      <button class="btn-retry" onclick="retry()">重试</button>
+    </div>`;
+}
+
+function updateStatus(ok, elapsedOrErr) {
+  if (ok) {
+    apiStatus.innerHTML = `<span class="dot"></span> API 正常 (${typeof elapsedOrErr === 'number' ? elapsedOrErr + 'ms' : ''})`;
+  } else {
+    apiStatus.innerHTML = `<span class="dot offline"></span> API 异常 - ${elapsedOrErr || '连接失败'}`;
+  }
+}
+
+// ===== Actions =====
+function loadMore() {
+  state.page++;
+  loadData();
+}
+
+function retry() {
+  state.page = 1;
+  state.nextCursor = null;
+  state.error = null;
+  state.items = [];
+  loadData();
+}
+
+function resetAndLoad() {
+  state.page = 1;
+  state.nextCursor = null;
+  state.error = null;
+  state.items = [];
+  loadData();
+}
+
+// ===== Search with debounce =====
+let searchTimer = null;
+searchInput.addEventListener('input', (e) => {
+  clearTimeout(searchTimer);
+  const query = e.target.value.trim();
+  searchTimer = setTimeout(() => {
+    state.searchQuery = query;
+    resetAndLoad();
+  }, 400);
+});
+
+// ===== Filter tabs =====
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    state.category = tab.dataset.category;
+    state.searchQuery = '';
+    searchInput.value = '';
+    resetAndLoad();
+  });
+});
+
+// ===== Refresh button =====
+refreshBtn.addEventListener('click', () => {
+  resetAndLoad();
+});
+
+// ===== Auto-refresh =====
+setInterval(() => {
+  loadData();
+}, REFRESH_INTERVAL);
+
+// ===== Init =====
+loadData();
+</script>
+</body>
+</html>
