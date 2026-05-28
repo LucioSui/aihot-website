@@ -20,7 +20,7 @@
       --accent: #818cf8;
       --accent-glow: rgba(129,140,248,0.35);
       --nav-height: 56px;
-      --container: 680px;
+      --container: min(680px, calc(100vw - 40px));
       --radius: 14px;
       --radius-sm: 8px;
       --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", sans-serif;
@@ -28,6 +28,8 @@
     }
 
     html { font-size: 15px; scroll-behavior: smooth; }
+    @media (max-width: 480px) { html { font-size: 14px; } }
+    @media (min-width: 1200px) { html { font-size: 16px; } }
     body {
       font-family: var(--font-sans);
       color: var(--text-primary);
@@ -608,19 +610,6 @@
       font-weight: 700;
     }
 
-    /* ===== Mobile ===== */
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero-title h1 { font-size: 1.5rem; }
-      .search-box input { width: 120px; }
-      .search-box input:focus { width: 160px; }
-      .filter-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      .feed { padding: 12px 16px 40px; }
-      .hero-inner { flex-direction: column; gap: 8px; }
-      .hero-status { text-align: left; }
-      .news-card { padding: 14px 16px; }
-    }
-
     .mobile-menu-btn {
       display: none;
       background: none;
@@ -628,7 +617,6 @@
       cursor: pointer;
       padding: 4px;
     }
-    @media (max-width: 768px) { .mobile-menu-btn { display: block; } }
     .mobile-menu-btn span {
       display: block;
       width: 20px;
@@ -637,6 +625,96 @@
       margin: 4px 0;
       border-radius: 2px;
       transition: 0.3s;
+    }
+
+    /* ===== Responsive: Tablet (≤1024px) ===== */
+    @media (max-width: 1024px) {
+      :root { --nav-height: 52px; }
+      .nav { max-width: 900px; }
+    }
+
+    /* ===== Responsive: Small Tablet / Large Phone (≤768px) ===== */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: block; }
+      .nav { max-width: 100%; }
+
+      .hero { padding: 28px 16px 20px; }
+      .hero-inner { flex-direction: column; gap: 8px; }
+      .hero-title h1 { font-size: 1.5rem; }
+      .hero-sub { font-size: 0.92rem; }
+      .hero-desc { font-size: 0.82rem; }
+      .hero-status { text-align: left; font-size: 0.72rem; }
+
+      .filters-inner { flex-wrap: wrap; gap: 8px; }
+      .filter-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-basis: 100%; }
+      .search-box { flex-basis: auto; }
+      .search-box input { width: 120px; }
+      .search-box input:focus { width: 160px; }
+
+      .feed { padding: 12px 16px 40px; }
+      .news-card { padding: 14px 16px; }
+      .card-title { font-size: 0.92rem; }
+      .card-body { font-size: 0.82rem; }
+
+      .refresh-bar { bottom: 16px; right: 16px; }
+      .refresh-btn { width: 42px; height: 42px; }
+
+      .pagination { padding: 16px 0 32px; }
+      .footer { padding: 20px 16px 48px; }
+    }
+
+    /* ===== Responsive: Phone (≤480px) ===== */
+    @media (max-width: 480px) {
+      :root { --nav-height: 48px; --radius: 12px; --radius-sm: 6px; }
+
+      .header { height: var(--nav-height); }
+      .logo { font-size: 1.1rem; }
+
+      .hero { margin-top: var(--nav-height); padding: 20px 12px 16px; }
+      .hero-title h1 { font-size: 1.3rem; }
+      .hero-sub { font-size: 0.82rem; }
+      .hero-desc { font-size: 0.76rem; }
+
+      .filters { top: var(--nav-height); padding: 10px 12px; }
+      .filter-tab { font-size: 0.76rem; padding: 4px 10px; }
+      .search-box input { width: 100px; padding: 4px 8px 4px 26px; font-size: 0.76rem; }
+      .search-box input:focus { width: 140px; }
+      .search-box svg { width: 12px; height: 12px; left: 6px; }
+
+      .feed { padding: 8px 12px 32px; }
+      .date-sep { font-size: 0.78rem; padding: 14px 0 8px; }
+      .news-card { padding: 12px 14px; margin-bottom: 8px; }
+      .card-top { gap: 8px; }
+      .card-time { font-size: 0.72rem; min-width: 28px; }
+      .card-source-name { font-size: 0.76rem; }
+      .card-title { font-size: 0.86rem; line-height: 1.5; }
+      .card-body { font-size: 0.78rem; line-height: 1.6; }
+      .card-tag { font-size: 0.68rem; padding: 2px 8px; }
+      .card-meta { font-size: 0.68rem; }
+
+      .refresh-bar { bottom: 12px; right: 12px; }
+      .refresh-btn { width: 38px; height: 38px; }
+      .refresh-btn svg { width: 16px; height: 16px; }
+
+      .pagination { padding: 12px 0 24px; }
+      .page-btn { padding: 5px 12px; font-size: 0.76rem; }
+      .page-info { font-size: 0.72rem; }
+
+      .feed-message { padding: 40px 16px; }
+      .feed-message svg { width: 36px; height: 36px; }
+      .feed-message h3 { font-size: 0.88rem; }
+      .feed-message p { font-size: 0.78rem; }
+
+      .footer { padding: 16px 12px 40px; font-size: 0.72rem; }
+      .btn-login { display: none; }
+    }
+
+    /* ===== Responsive: Large Desktop (≥1400px) ===== */
+    @media (min-width: 1400px) {
+      :root { --container: 800px; }
+      .nav { max-width: 1200px; }
+      .news-card { padding: 22px 26px; }
     }
   </style>
 </head>
