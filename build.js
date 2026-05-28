@@ -192,6 +192,14 @@ function deploy(html) {
   fs.writeFileSync(OUTPUT_FILE, html, 'utf-8');
   const sizeKB = Math.round(html.length / 1024);
   console.log(`  Written ${OUTPUT_FILE} (${sizeKB} KB)`);
+
+  // Copy CNAME file to docs/ for GitHub Pages custom domain
+  const cnameSrc = path.join(__dirname, 'CNAME');
+  const cnameDest = path.join(OUTPUT_DIR, 'CNAME');
+  if (fs.existsSync(cnameSrc)) {
+    fs.copyFileSync(cnameSrc, cnameDest);
+    console.log(`  Copied CNAME -> ${cnameDest}`);
+  }
 }
 
 // ===== Main =====
