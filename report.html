@@ -354,6 +354,23 @@ footer .brand-name {
   border-radius: 2px;
   transition: 0.3s;
 }
+.nav-links.mobile-open {
+  display: flex !important;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  background: rgba(10, 10, 30, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  z-index: 100;
+}
+.nav-links.mobile-open a {
+  padding: 10px 12px;
+}
 
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
@@ -717,6 +734,15 @@ document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+// ===== Mobile menu toggle =====
+var rMobileBtn = document.querySelector('.mobile-menu-btn');
+var rNavLinks = document.querySelector('.nav-links');
+if (rMobileBtn && rNavLinks) {
+  rMobileBtn.addEventListener('click', function() {
+    rNavLinks.classList.toggle('mobile-open');
+  });
+}
 </script>
 
 </body>
