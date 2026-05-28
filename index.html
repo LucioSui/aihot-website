@@ -685,9 +685,9 @@
       .hero-status { text-align: right; font-size: 0.72rem; grid-row: 2; }
       .filters-inner { flex-wrap: wrap; gap: 8px; }
       .filter-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-basis: 100%; }
-      .search-box { flex-basis: auto; }
-      .search-box input { width: 120px; }
-      .search-box input:focus { width: 160px; }
+      .search-box { flex-basis: 100%; width: 100%; }
+      .search-box input { width: 100%; }
+      .search-box input:focus { width: 100%; }
       .feed { padding: 12px 16px 40px; }
       .news-card { padding: 14px 16px; }
       .card-title { font-size: 0.92rem; }
@@ -709,8 +709,9 @@
       .hero-desc { font-size: 0.76rem; }
       .filters { top: var(--nav-height); padding: 10px 12px; }
       .filter-tab { font-size: 0.76rem; padding: 4px 10px; }
-      .search-box input { width: 100px; padding: 4px 8px 4px 26px; font-size: 0.76rem; }
-      .search-box input:focus { width: 140px; }
+      .search-box { flex-basis: 100%; width: 100%; }
+      .search-box input { width: 100%; padding: 5px 10px 5px 28px; font-size: 0.76rem; }
+      .search-box input:focus { width: 100%; }
       .search-box svg { width: 12px; height: 12px; left: 6px; }
       .feed { padding: 8px 12px 32px; }
       .date-sep { font-size: 0.78rem; padding: 14px 0 8px; }
